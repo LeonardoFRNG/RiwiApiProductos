@@ -1,18 +1,33 @@
 package com.david.tiendita.Controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import com.david.tiendita.Entity.Categoria;
+import com.david.tiendita.Service.CategoriaService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
+@RequestMapping("/categorias") //todas las rutas de esta clase empezaran con /categorias
 public class CategoriaController {
-    @GetMapping("/categorias")
-    public String obtenerCategorias() {
-        return "Aquí en el futuro devolveremos una lista real de categorías desde MySQL.";
+   //Declaramos a nuestro chef
+    private final CategoriaService categoriaService;
+
+    //Inyeccion de dependencias: Spring nos pasa el service ya listo
+    public CategoriaController(CategoriaService categoriaService) {
+        this.categoriaService = categoriaService;
     }
 
-    @GetMapping("/categorias/{id}")
-    public String obtenerCategoriaPorId(@PathVariable Long id) {
-        return "Aqui devolveremos la informacion de la categoria con el id: " + id;
+    // GET: http://localhost:8080/categorias
+    @GetMapping
+    public List<Categoria> obtenerTodas() {
+        //El controller no busca en la BD, le pide al service que lo haga
+        return categoriaService.obtenerTodas();
+    }
+
+    // POST: http://localhost:8080/categorias
+    @PostMapping
+    public Categoria crearCategoria(@RequestBody Categoria categoria) {
+        //Recibimos el JSON convertido a Java y se lo pasamos al service para guardar
+        return categoriaService.guardar(categoria);
     }
 }
