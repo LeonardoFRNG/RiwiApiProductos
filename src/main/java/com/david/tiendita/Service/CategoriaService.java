@@ -26,5 +26,31 @@ public class CategoriaService {
         return categoriaRepository.save(categoria);
     }
 
+    //Buscamos uno solo
+    public Categoria obtenerPorId(Long id) {
+        //find by id nos da un optional. Usamos .orElse(null) para decir:
+        //si la caja esta vacia devuelve nulo
+        return categoriaRepository.findById(id).orElse(null);
+    }
+
+    //Actualizar
+    public Categoria actualizar(Long id, Categoria categoriaActualizada) {
+        //primero verificamos si la categoria existe
+        Categoria categoriaExistente = obtenerPorId(id);
+
+        if (categoriaExistente != null) {
+            categoriaExistente.setNombre(categoriaActualizada.getNombre());
+            categoriaExistente.setDescripcion(categoriaActualizada.getDescripcion());
+
+            //como categoria existente ya tiene su id original, esto hara un update en mysql
+            return categoriaRepository.save(categoriaExistente);
+        }
+        return null; //si no existe retornamos null
+    }
+
+    public void eliminar(Long id) {
+        categoriaRepository.deleteById(id);
+    }
+
 
 }

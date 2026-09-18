@@ -30,4 +30,21 @@ public class CategoriaController {
         //Recibimos el JSON convertido a Java y se lo pasamos al service para guardar
         return categoriaService.guardar(categoria);
     }
+    // GET: http://localhost:8080/categorias/{id}
+    @GetMapping("/{id}")
+    public Categoria obtenerPorId(@PathVariable Long id) {
+        return categoriaService.obtenerPorId(id);
+    }
+
+    // PUT: http://localhost:8080/categorias/{id}
+    @PutMapping("/{id}")
+    public Categoria actualizar(@PathVariable Long id, @RequestBody Categoria categoria) {
+        return categoriaService.actualizar(id, categoria);
+    }
+
+    // DELETE: http://localhost:8080/categorias/{id}
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable Long id) {
+        categoriaService.eliminar(id);
+    }
 }
