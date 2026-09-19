@@ -28,7 +28,7 @@ public class ProductoService {
     //Buscar un solo producto
     public Producto obtenerPorId(Long id) {
         //find by id nos da un optional. Usamos .orElse(null) para decir:
-        //si la caja esta vacia devuelve nulo
+        //si la caja esta vacía devuelve nulo
         return productoRepository.findById(id).orElse(null);
     }
 
